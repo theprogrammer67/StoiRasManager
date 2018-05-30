@@ -78,7 +78,10 @@ begin
   LMessage := RasConnStatusString(AConnectionState, AErrorCode);
   SendMessage(NotifyWnd, WM_CONNMESSAGE, 0, LPARAM(PChar(LMessage)));
   if AErrorCode <> 0 then
-    RasHangUp(AConnectionHandle); // Обязательно разорвать соединение!
+    try
+      RasHangUp(AConnectionHandle); // Обязательно разорвать соединение!
+    except
+    end;
 
   if (AConnectionState = RASCS_Connected) or
     (AConnectionState = RASCS_Disconnected) or (AErrorCode <> 0) then
@@ -179,7 +182,10 @@ begin
     begin
       Items[I].Connection.Busy := False;
       if ADisconnect then
-        Items[I].Connection.HangUp;
+        try
+          Items[I].Connection.HangUp;
+        except
+        end;
 
       Exit;
     end;

@@ -1,10 +1,9 @@
 object frmMainForm: TfrmMainForm
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'RAS manager'
-  ClientHeight = 264
-  ClientWidth = 409
+  ClientHeight = 275
+  ClientWidth = 464
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,8 +20,8 @@ object frmMainForm: TfrmMainForm
   object tvConnections: TTreeView
     Left = 0
     Top = 0
-    Width = 409
-    Height = 245
+    Width = 464
+    Height = 256
     Align = alClient
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -33,16 +32,20 @@ object frmMainForm: TfrmMainForm
     ReadOnly = True
     TabOrder = 0
     OnMouseDown = tvConnectionsMouseDown
+    ExplicitWidth = 409
+    ExplicitHeight = 245
   end
   object statStatus: TStatusBar
     Left = 0
-    Top = 245
-    Width = 409
+    Top = 256
+    Width = 464
     Height = 19
     Panels = <
       item
         Width = 500
       end>
+    ExplicitTop = 245
+    ExplicitWidth = 409
   end
   object ilImages: TImageList
     Left = 256
