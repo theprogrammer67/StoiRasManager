@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, RasHelperClasses,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ImgList, Vcl.ComCtrls, Vcl.StdCtrls,
-  Ras, Vcl.ToolWin, Vcl.Menus, uRASMngrCommon, Vcl.ExtCtrls, System.ImageList;
+  Ras, Vcl.ToolWin, Vcl.Menus, uRASMngrCommon, Vcl.ExtCtrls, System.ImageList,
+  Vcl.AppEvnts;
 
 type
   TfrmMainForm = class(TForm)
@@ -33,6 +34,13 @@ type
     spl1: TSplitter;
     mmoLog: TMemo;
     ilImages: TImageList;
+    trycnTray: TTrayIcon;
+    aplctnvntsEvents: TApplicationEvents;
+    pmTray: TPopupMenu;
+    Show1: TMenuItem;
+    Exit1: TMenuItem;
+    procedure aplctnvntsEventsMinimize(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure mniNew1Click(Sender: TObject);
@@ -49,6 +57,8 @@ type
     procedure mniAdditionalClick(Sender: TObject);
     procedure mniselected1Click(Sender: TObject);
     procedure mniEditConnectionPopupClick(Sender: TObject);
+    procedure Show1Click(Sender: TObject);
+    procedure trycnTrayDblClick(Sender: TObject);
   private
     FSelConnectionInd: Integer;
     FOperationStatus: TOperationStatus;
@@ -79,7 +89,7 @@ type
     procedure OnMsgConnectionState(var Msg: TMessage); message WM_CONNSTATE;
     procedure OnMsgConnectionMessage(var Msg: TMessage); message WM_CONNMESSAGE;
   public
-//    FPhonebook: TPhonebook;
+    // FPhonebook: TPhonebook;
   end;
 
 var
@@ -100,7 +110,6 @@ begin
   Result := IncludeTrailingPathDelimiter(PChar(S));
 end;
 
-
 {$R *.dfm}
 { TfrmMainForm }
 
@@ -109,6 +118,16 @@ begin
   if AEntry.Connection.Connected then
     AddRoute(Application.Handle, FRouteNodeAddr, FRouteMask,
       AEntry.Connection.IPAddress);
+end;
+
+procedure TfrmMainForm.aplctnvntsEventsMinimize(Sender: TObject);
+begin
+  Hide();
+  WindowState := wsMinimized;
+
+  trycnTray.Visible := True;
+  trycnTray.Animate := True;
+  trycnTray.ShowBalloonHint;
 end;
 
 procedure TfrmMainForm.AppendToLog(const AText: string);
@@ -159,6 +178,11 @@ begin
 
   EditConnection(SelConnection);
   Phonebook.Refresh;
+end;
+
+procedure TfrmMainForm.Exit1Click(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TfrmMainForm.FormCreate(Sender: TObject);
@@ -310,8 +334,7 @@ end;
 
 procedure TfrmMainForm.OnMsgConnectionState(var Msg: TMessage);
 begin
-  AppendToLog(GetOperationStatusDescr
-    (TOperationStatus(Msg.LParam)));
+  AppendToLog(GetOperationStatusDescr(TOperationStatus(Msg.LParam)));
 end;
 
 procedure TfrmMainForm.ReadSettings;
@@ -343,7 +366,7 @@ begin
   begin
     tvConnections.Enabled := True;
     tvConnections.Selected := tvConnections.Items[FSelConnectionInd];
-//    ProcessMessages;
+    // ProcessMessages;
     tvConnections.SetFocus;
   end;
 end;
@@ -371,12 +394,25 @@ begin
   end;
 end;
 
+procedure TfrmMainForm.Show1Click(Sender: TObject);
+begin
+  trycnTrayDblClick(Sender);
+end;
+
 procedure TfrmMainForm.StoreSelConnectionInd;
 begin
   if tvConnections.Selected <> nil then
     FSelConnectionInd := tvConnections.Selected.AbsoluteIndex
   else
     FSelConnectionInd := -1;
+end;
+
+procedure TfrmMainForm.trycnTrayDblClick(Sender: TObject);
+begin
+  trycnTray.Visible := False;
+  Show();
+  WindowState := wsNormal;
+  Application.BringToFront();
 end;
 
 procedure TfrmMainForm.tvConnectionsMouseDown(Sender: TObject;
@@ -402,7 +438,7 @@ begin
   tvConnections.Items.BeginUpdate;
   try
     tvConnections.Items.Clear;
-    Root := tvConnections.Items.AddFirst(nil, 'Connections');
+    Root := tvConnections.Items.AddFirst(nil, 'Phonebook');
     Root.SelectedIndex := 0;
     Root.ImageIndex := 0;
     for I := 0 to Phonebook.Count - 1 do
