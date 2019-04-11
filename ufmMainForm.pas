@@ -10,7 +10,6 @@ uses
 
 type
   TfrmMainForm = class(TForm)
-    ilImages: TImageList;
     mmMainMenu: TMainMenu;
     mniFile1: TMenuItem;
     mniNew1: TMenuItem;
@@ -31,6 +30,9 @@ type
     mniAbout1: TMenuItem;
     statStatus: TStatusBar;
     mniEditConnectionPopup: TMenuItem;
+    spl1: TSplitter;
+    mmoLog: TMemo;
+    ilImages: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure mniNew1Click(Sender: TObject);
@@ -68,6 +70,7 @@ type
     procedure EditConnection(AEntry: TRasPhonebookEntry); overload;
     procedure EditConnection; overload;
     procedure AddRouteToConnection(AEntry: TRasPhonebookEntry); overload;
+    procedure AppendToLog(const AText: string);
   private
     procedure SaveSettings;
     procedure ReadSettings;
@@ -106,6 +109,12 @@ begin
   if AEntry.Connection.Connected then
     AddRoute(Application.Handle, FRouteNodeAddr, FRouteMask,
       AEntry.Connection.IPAddress);
+end;
+
+procedure TfrmMainForm.AppendToLog(const AText: string);
+begin
+  statStatus.Panels[0].Text := AText;
+  mmoLog.Lines.Add(AText);
 end;
 
 procedure TfrmMainForm.Connect;
@@ -296,13 +305,13 @@ end;
 
 procedure TfrmMainForm.OnMsgConnectionMessage(var Msg: TMessage);
 begin
-  statStatus.Panels[0].Text := PChar(Msg.LParam);
+  AppendToLog(PChar(Msg.LParam));
 end;
 
 procedure TfrmMainForm.OnMsgConnectionState(var Msg: TMessage);
 begin
-  statStatus.Panels[0].Text := GetOperationStatusDescr
-    (TOperationStatus(Msg.LParam));
+  AppendToLog(GetOperationStatusDescr
+    (TOperationStatus(Msg.LParam)));
 end;
 
 procedure TfrmMainForm.ReadSettings;

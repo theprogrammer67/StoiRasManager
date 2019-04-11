@@ -62,7 +62,8 @@
         <DCC_K>false</DCC_K>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <Icon_MainIcon>ConnectionManager_Icon1.ico</Icon_MainIcon>
+        <AppEnableAdministrator>true</AppEnableAdministrator>
+        <Icon_MainIcon>RASManager_Icon.ico</Icon_MainIcon>
         <DCC_UsePackage>PackageCreatorXE2;JvGlobus;JvMM;JvManagedThreads;JvCrypt;TeeDB;inetdbbde;vclib;JvNet;StoiControls;DBXSybaseASEDriver;JvDotNetCtrls;vclimg;fmi;RtmRxCtl160;JvXPCtrls;vcldb;vcldsnap;DBXDb2Driver;Intraweb_120_160;vclribbon;vcl;CloudService;DBXMSSQLDriver;FmxTeeUI;JvAppFrm;JvRuntimeDesign;webdsnap;JclDeveloperTools;JvDocking;adortl;JvWizards;JvHMI;JvBands;vcldbx;Tee;JclContainers;DBXOdbcDriver;JvCmp;svnui;ibxpress;JvTimeFramework;intrawebdb_120_160;vclactnband;FMXTee;TeeUI;SCConnector;bindcompvcl;Jcl;vclie;JvJans;JvPrintPreview;vcltouch;websnap;VclSmp;DataSnapConnectors;dsnapcon;JclVcl;JvPascalInterpreter;vclx;svn;bdertl;PortsComboBox;JvBDE;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
@@ -79,9 +80,8 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <Icon_MainIcon>RASManager_Icon.ico</Icon_MainIcon>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
-        <Icon_MainIcon>ConnectionManager_Icon1.ico</Icon_MainIcon>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
@@ -93,7 +93,7 @@
         <DCC_DebugInformation>0</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <Icon_MainIcon>ConnectionManager_Icon1.ico</Icon_MainIcon>
+        <Icon_MainIcon>RASManager_Icon.ico</Icon_MainIcon>
         <AppEnableAdministrator>true</AppEnableAdministrator>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
