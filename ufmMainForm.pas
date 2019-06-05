@@ -131,9 +131,15 @@ begin
 end;
 
 procedure TfrmMainForm.AppendToLog(const AText: string);
+var
+  LText: string;
 begin
-  statStatus.Panels[0].Text := AText;
-  mmoLog.Lines.Add(AText);
+  LText := Trim(AText);
+  if LText = '' then
+    Exit;
+  statStatus.Panels[0].Text := LText;
+  LText :=  FormatDateTime('yyyy.mm.dd hh:nn:ss.zzz', Now) + #9 + LText;
+  mmoLog.Lines.Add(LText);
 end;
 
 procedure TfrmMainForm.Connect;

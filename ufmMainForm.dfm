@@ -3580,7 +3580,6 @@ object frmMainForm: TfrmMainForm
     ReadOnly = True
     TabOrder = 0
     OnMouseDown = tvConnectionsMouseDown
-    ExplicitHeight = 201
   end
   object statStatus: TStatusBar
     Left = 0
@@ -3591,7 +3590,6 @@ object frmMainForm: TfrmMainForm
       item
         Width = 500
       end>
-    ExplicitTop = 274
   end
   object mmoLog: TMemo
     Left = 0
@@ -3603,7 +3601,6 @@ object frmMainForm: TfrmMainForm
     ReadOnly = True
     ScrollBars = ssBoth
     TabOrder = 2
-    ExplicitTop = 192
   end
   object mmMainMenu: TMainMenu
     Left = 160
@@ -3675,7 +3672,7 @@ object frmMainForm: TfrmMainForm
     Left = 256
     Top = 64
     Bitmap = {
-      494C010109000B00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010109000B002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
